@@ -32,8 +32,8 @@ export default function VideoFeed({ videos }: VideoFeedProps) {
           <Film className="w-10 h-10 text-purple-400/60" />
         </div>
 
-        <h2 className="text-2xl font-bold text-white/80 mb-2">No videos yet</h2>
-        <p className="text-white/40 text-center max-w-md mb-8">
+        <h2 className="text-2xl font-bold text-[var(--text-primary)] opacity-80 mb-2">No videos yet</h2>
+        <p className="text-[var(--text-muted)] text-center max-w-md mb-8">
           Be the first to share a video! Upload your reels, short clips, or creative content.
         </p>
 

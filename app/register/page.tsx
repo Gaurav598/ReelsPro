@@ -80,7 +80,7 @@ export default function RegisterPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold gradient-text mb-2">Create Account</h1>
-          <p className="text-white/40 text-sm">Join ReelsPro and start sharing videos</p>
+          <p className="text-[var(--text-muted)] text-sm">Join ReelsPro and start sharing videos</p>
         </div>
 
         {/* ========== SOCIAL SIGNUP BUTTONS ========== */}
@@ -90,8 +90,8 @@ export default function RegisterPage() {
             onClick={() => handleSocialLogin("google")}
             disabled={socialLoading !== null}
             className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl
-                       bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
-                       transition-all duration-300 text-white/80 font-medium text-sm
+                       border-2 border-[var(--glass-border)] hover:bg-[var(--accent-purple)] hover:text-black
+                       transition-all duration-150 text-[var(--text-primary)] opacity-80 font-bold text-sm
                        disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {socialLoading === "google" ? (
@@ -112,8 +112,8 @@ export default function RegisterPage() {
             onClick={() => handleSocialLogin("github")}
             disabled={socialLoading !== null}
             className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl
-                       bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
-                       transition-all duration-300 text-white/80 font-medium text-sm
+                       border-2 border-[var(--glass-border)] hover:bg-[var(--accent-purple)] hover:text-black
+                       transition-all duration-150 text-[var(--text-primary)] opacity-80 font-bold text-sm
                        disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {socialLoading === "github" ? (
@@ -130,14 +130,14 @@ export default function RegisterPage() {
         {/* ========== DIVIDER ========== */}
         <div className="flex items-center gap-3 mb-6">
           <div className="flex-1 h-px bg-white/10"></div>
-          <span className="text-xs text-white/30 uppercase tracking-wider">or register with email</span>
+          <span className="text-xs text-[var(--text-primary)] opacity-30 uppercase tracking-wider">or register with email</span>
           <div className="flex-1 h-px bg-white/10"></div>
         </div>
 
         {/* ========== CREDENTIALS FORM ========== */}
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)] opacity-60 mb-2">
               <Mail className="w-4 h-4" />
               Email Address
             </label>
@@ -153,7 +153,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)] opacity-60 mb-2">
               <Lock className="w-4 h-4" />
               Password
             </label>
@@ -171,7 +171,7 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-primary)] opacity-30 hover:text-[var(--text-primary)] opacity-60 transition-colors"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -188,7 +188,7 @@ export default function RegisterPage() {
                     }}
                   />
                 </div>
-                <span className="text-xs text-white/30">
+                <span className="text-xs text-[var(--text-primary)] opacity-30">
                   {password.length >= 10 ? "Strong" : password.length >= 6 ? "Good" : "Weak"}
                 </span>
               </div>
@@ -196,7 +196,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)] opacity-60 mb-2">
               <ShieldCheck className="w-4 h-4" />
               Confirm Password
             </label>
@@ -243,7 +243,7 @@ export default function RegisterPage() {
 
         {/* Login Link */}
         <div className="mt-6 text-center">
-          <p className="text-sm text-white/40">
+          <p className="text-sm text-[var(--text-muted)]">
             Already have an account?{" "}
             <Link
               href="/login"

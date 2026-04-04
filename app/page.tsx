@@ -43,7 +43,7 @@ export default async function Home() {
         <h1 className="text-3xl font-bold gradient-text mb-2">
           Discover Videos
         </h1>
-        <p className="text-white/40">
+        <p className="text-[var(--text-muted)]">
           Watch, share, and upload amazing short videos
         </p>
       </div>
