@@ -53,7 +53,7 @@ export default function VideoUploadPage() {
             </div>
             <h1 className="text-2xl font-bold gradient-text">Upload New Reel</h1>
           </div>
-          <p className="text-white/40 text-sm ml-[52px]">
+          <p className="text-[var(--text-muted)] text-sm ml-[52px]">
             Share your video with the world
           </p>
         </div>

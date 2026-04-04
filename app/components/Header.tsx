@@ -45,7 +45,7 @@ export default function Header() {
           >
             <div className="w-8 h-8 rounded-lg flex items-center justify-center"
                  style={{ background: "var(--gradient-primary)" }}>
-              <Home className="w-4 h-4 text-white" />
+              <Home className="w-4 h-4 text-[var(--text-primary)]" />
             </div>
             <span className="gradient-text">ReelsPro</span>
           </Link>
@@ -87,8 +87,8 @@ export default function Header() {
                   >
                     {/* User email */}
                     <li className="px-3 py-2">
-                      <span className="text-xs text-white/40">Signed in as</span>
-                      <p className="text-sm text-white/80 truncate">
+                      <span className="text-xs text-[var(--text-primary)]/40">Signed in as</span>
+                      <p className="text-sm text-[var(--text-primary)]/80 truncate">
                         {session.user?.email}
                       </p>
                     </li>
@@ -99,8 +99,8 @@ export default function Header() {
                     <li>
                       <Link
                         href="/upload"
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-white/70
-                                   hover:bg-white/5 hover:text-white transition-colors w-full"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[var(--text-primary)]/70
+                                   hover:bg-[var(--accent-purple)] hover:text-black transition-colors w-full border-2 border-transparent hover:border-black"
                       >
                         <Upload className="w-4 h-4" />
                         Upload Video
@@ -126,8 +126,8 @@ export default function Header() {
               <Link
                 href="/login"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
-                           border border-white/10 hover:border-purple-500/30 hover:bg-white/5
-                           text-white/70 hover:text-white transition-all"
+                           border-2 border-[var(--glass-border)] hover:bg-[var(--accent-purple)] hover:text-black
+                           text-[var(--text-primary)]/70 transition-all font-bold"
               >
                 <LogIn className="w-4 h-4" />
                 Sign In

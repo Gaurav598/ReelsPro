@@ -166,8 +166,8 @@ const FileUpload = ({ onSuccess, onProgress, fileType = "image" }: FileUploadPro
               <Upload className="w-4 h-4 text-purple-400 animate-pulse" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm text-white/80 truncate">{fileName}</p>
-              <p className="text-xs text-white/40">Uploading... {progress}%</p>
+              <p className="text-sm text-[var(--text-primary)] opacity-80 truncate">{fileName}</p>
+              <p className="text-xs text-[var(--text-muted)]">Uploading... {progress}%</p>
             </div>
           </div>
           <div className="progress-bar">
@@ -184,10 +184,10 @@ const FileUpload = ({ onSuccess, onProgress, fileType = "image" }: FileUploadPro
           onDrop={handleDrop}
         >
           <Icon className="w-10 h-10 mx-auto mb-3 text-purple-400/60" />
-          <p className="text-sm text-white/60 mb-1">
+          <p className="text-sm text-[var(--text-primary)] opacity-60 mb-1">
             {dragging ? "Drop your file here!" : "Click or drag & drop to upload"}
           </p>
-          <p className="text-xs text-white/30">
+          <p className="text-xs text-[var(--text-primary)] opacity-30">
             {fileType === "video"
               ? "MP4, WebM, MOV — max 100MB"
               : "JPG, PNG, WebP — max 10MB"}

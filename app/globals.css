@@ -2,89 +2,70 @@
 @plugin "daisyui";
 
 /* ==========================================================
-   CUSTOM CSS VARIABLES (Design Tokens)
+   CUSTOM CSS VARIABLES (Neo-Brutalism / Lego Aesthetic)
    ----------------------------------------------------------
-   Yeh variables poore app mein reuse hote hain.
-   Ek jagah change karo → sab jagah apply ho jaayega.
+   Solid, bold, blocky colors. No glass, no blur.
    ========================================================== */
 :root, [data-theme="dark"] {
-  --bg-primary: #0a0a1a;
-  --bg-secondary: #12122a;
-  --glass-bg: rgba(20, 20, 50, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --accent-purple: #7c3aed;
-  --accent-blue: #3b82f6;
-  --accent-pink: #ec4899;
-  --text-primary: #e2e8f0;
+  --bg-primary: #18181b;
+  --bg-secondary: #000000;
+  --card-bg: #27272a;
+  --glass-border: #ffffff;
+  
+  /* Lego Colors */
+  --accent-purple: #facc15; /* Yellow */
+  --accent-blue: #3b82f6;   /* Blue */
+  --accent-pink: #ef4444;   /* Red */
+  
+  --text-primary: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.6);
-  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #3b82f6 50%, #06b6d4 100%);
-  --gradient-accent: linear-gradient(135deg, #ec4899 0%, #7c3aed 100%);
+  --shadow-color: #ffffff;
+  
+  --gradient-primary: #facc15;
+  --gradient-accent: #3b82f6;
 }
 
 [data-theme="light"] {
-  --bg-primary: #f8fafc;
+  --bg-primary: #fdfdfc;
   --bg-secondary: #ffffff;
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(0, 0, 0, 0.08);
-  --accent-purple: #6d28d9;
-  --accent-blue: #2563eb;
-  --accent-pink: #db2777;
-  --text-primary: #0f172a;
-  --text-muted: rgba(0, 0, 0, 0.5);
-  --gradient-primary: linear-gradient(135deg, #6d28d9 0%, #2563eb 50%, #0891b2 100%);
-  --gradient-accent: linear-gradient(135deg, #db2777 0%, #6d28d9 100%);
+  --card-bg: #ffffff;
+  --glass-border: #000000;
+  
+  /* Lego Colors */
+  --accent-purple: #facc15; 
+  --accent-blue: #2563eb;   
+  --accent-pink: #dc2626;   
+  
+  --text-primary: #000000;
+  --text-muted: rgba(0, 0, 0, 0.6);
+  --shadow-color: #000000;
+  
+  --gradient-primary: #2563eb; 
+  --gradient-accent: #dc2626;
 }
 
-/* Tailwind v4 theme tokens — maps CSS vars to Tailwind classes */
 @theme inline {
   --color-background: var(--bg-primary);
-  --color-foreground: #e2e8f0;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground: var(--text-primary);
 }
 
 /* ==========================================================
-   KEYFRAME ANIMATIONS
-   ----------------------------------------------------------
-   @keyframes define HOW an animation looks.
-   We apply them using classes like .animate-fade-in below.
+   KEYFRAME ANIMATIONS (Bouncy & Tactile)
    ========================================================== */
-
-/* Element appears by fading in + sliding up slightly */
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+  60% { transform: scale(1.05) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Bigger slide-up for dramatic entrances */
 @keyframes slide-up {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Gentle floating up/down — used for decorative elements */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Moving gradient background — creates a "living" gradient effect */
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Glowing shadow pulse — used on important buttons/cards */
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(124, 58, 237, 0.2); }
-  50% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.4); }
-}
-
-/* Shimmer effect for loading skeletons */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* ==========================================================
@@ -93,299 +74,247 @@
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
   min-height: 100vh;
 }
 
 /* ==========================================================
-   GLASSMORPHISM EFFECTS
-   ----------------------------------------------------------
-   "Glass" effect = semi-transparent background + blur.
-   It creates a frosted glass look on dark backgrounds.
+   NEO-BRUTALISM "BLOCKS" (Replacing Glass)
    ========================================================== */
 
-/* Glass card — used for login/register forms, upload forms */
+/* The Lego Card - Blocky, bold, solid */
 .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 1.25rem;
+  background: var(--card-bg);
+  border: 4px solid var(--glass-border);
+  border-radius: 0;
+  box-shadow: 6px 6px 0px 0px var(--shadow-color);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Glass input fields — semi-transparent with purple focus glow */
-.glass-input {
-  background: var(--glass-border) !important;
-  border: 1px solid var(--glass-border) !important;
+.glass-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0px 0px var(--shadow-color);
+}
+
+/* Lego Inputs */
+.glass-input, .glass-textarea {
+  background: var(--bg-primary) !important;
+  border: 3px solid var(--text-primary) !important;
   color: var(--text-primary) !important;
-  transition: all 0.3s ease;
-  border-radius: 0.75rem;
+  border-radius: 0;
   padding: 0.75rem 1rem;
   width: 100%;
   font-size: 0.95rem;
   outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 4px 4px 0px 0px var(--shadow-color);
 }
 
-.glass-input::placeholder {
-  color: var(--text-muted);
-}
-
-.glass-input:focus {
-  border-color: var(--accent-purple) !important;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15) !important;
-  background: var(--glass-bg) !important;
-}
-
-/* Glass textarea — same as input but for multi-line */
 .glass-textarea {
-  background: var(--glass-border) !important;
-  border: 1px solid var(--glass-border) !important;
-  color: var(--text-primary) !important;
-  transition: all 0.3s ease;
-  border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
-  width: 100%;
-  font-size: 0.95rem;
-  outline: none;
   resize: vertical;
   min-height: 100px;
-  font-family: inherit;
 }
 
-.glass-textarea::placeholder {
+.glass-input::placeholder, .glass-textarea::placeholder {
   color: var(--text-muted);
 }
 
-.glass-textarea:focus {
-  border-color: var(--accent-purple) !important;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15) !important;
-  background: var(--glass-bg) !important;
+.glass-input:focus, .glass-textarea:focus {
+  border-color: var(--accent-blue) !important;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px var(--shadow-color) !important;
 }
 
 /* ==========================================================
-   GRADIENT UTILITIES
+   BUTTONS & UTILITIES
    ========================================================== */
 
-/* Text with gradient color (jaise heading mein colorful text) */
 .gradient-text {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
+  text-shadow: 3px 3px 0px var(--accent-purple);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  font-size: 3rem;
+  -webkit-text-stroke: 1px var(--text-primary); /* Bold edge */
 }
 
-/* Gradient button — shiny purple-blue button */
+/* Blocky Action Button */
 .gradient-btn {
   background: var(--gradient-primary);
-  color: white;
-  border: none;
-  border-radius: 0.75rem;
+  color: #fff;
+  border: 3px solid var(--glass-border);
+  border-radius: 0;
   padding: 0.75rem 1.5rem;
-  font-weight: 600;
+  font-weight: 800;
+  text-transform: uppercase;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.1s ease-out;
+  box-shadow: 6px 6px 0px 0px var(--shadow-color);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 }
 
+[data-theme="light"] .gradient-btn {
+  color: #ffffff;
+}
+
 .gradient-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.35);
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px 0px var(--shadow-color);
+  background: var(--accent-pink); /* Hover color switch */
 }
 
 .gradient-btn:active {
-  transform: translateY(0);
+  transform: translate(6px, 6px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
 }
 
 .gradient-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  transform: translate(6px, 6px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* ==========================================================
-   ANIMATION UTILITY CLASSES
-   ----------------------------------------------------------
-   In CSS mein animation define hoti hai, class add karo element pe → animate ho jaayega
+   ANIMATIONS
    ========================================================== */
 .animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+  animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .animate-slide-up {
-  animation: slide-up 0.6s ease-out forwards;
+  animation: slide-up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Loading skeleton shimmer */
 .skeleton-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
-  background-size: 200% 100%;
+  background: var(--card-bg);
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--glass-border);
+  border-radius: 0;
+}
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   animation: shimmer 1.5s infinite;
-  border-radius: 0.5rem;
 }
 
-/* ==========================================================
-   STAGGERED ANIMATION (Children appear one by one)
-   ----------------------------------------------------------
-   Parent ko .stagger-children class do,
-   Uske children ek-ek karke animate honge (delay ke saath)
-   ========================================================== */
 .stagger-children > * {
   opacity: 0;
-  animation: slide-up 0.5s ease-out forwards;
+  animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 .stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
 .stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
 .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
 .stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
-.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
-.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
 
 /* ==========================================================
-   CUSTOM SCROLLBAR (Chrome/Edge/Safari)
+   SCROLLBAR (Blocky)
    ========================================================== */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 14px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-primary);
+  border-left: 3px solid var(--glass-border);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.3);
-  border-radius: 3px;
+  background: var(--accent-purple);
+  border: 3px solid var(--glass-border);
+  border-right: none;
+  border-left: none;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.5);
+  background: var(--accent-pink);
 }
 
 /* ==========================================================
-   FILE UPLOAD ZONE (Drag & Drop Area)
+   UPLOAD ZONE
    ========================================================== */
 .upload-zone {
-  border: 2px dashed rgba(124, 58, 237, 0.3);
-  border-radius: 1rem;
-  transition: all 0.3s ease;
+  border: 4px dashed var(--text-primary);
+  background: var(--card-bg);
+  border-radius: 0;
+  transition: all 0.2s ease;
   cursor: pointer;
   padding: 2rem;
   text-align: center;
+  box-shadow: 6px 6px 0px 0px var(--shadow-color);
 }
 
-.upload-zone:hover,
-.upload-zone.dragging {
-  border-color: var(--accent-purple);
-  background: rgba(124, 58, 237, 0.05);
+.upload-zone:hover, .upload-zone.dragging {
+  background: var(--accent-purple);
+  color: #000;
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0px 0px var(--shadow-color);
 }
 
 /* ==========================================================
-   PROGRESS BAR (Upload/Loading Progress)
+   PROGRESS BAR
    ========================================================== */
 .progress-bar {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  overflow: hidden;
+  height: 16px;
+  background: var(--bg-primary);
+  border: 3px solid var(--text-primary);
+  border-radius: 0;
   width: 100%;
 }
-
 .progress-bar-fill {
   height: 100%;
-  background: var(--gradient-primary);
-  border-radius: 3px;
+  background: var(--accent-pink);
   transition: width 0.3s ease;
 }
 
 /* ==========================================================
-   VIDEO CARD HOVER EFFECTS
+   VIDEO CARD
    ========================================================== */
 .video-card {
-  border-radius: 1rem;
+  border-radius: 0;
   overflow: hidden;
-  transition: all 0.3s ease;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: var(--card-bg);
+  border: 4px solid var(--glass-border);
+  box-shadow: 8px 8px 0px 0px var(--shadow-color);
 }
 
 .video-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15);
-  border-color: rgba(124, 58, 237, 0.2);
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0px 0px var(--accent-blue);
+  border-color: var(--accent-blue);
 }
 
-/* Play button overlay on video thumbnails */
 .play-overlay {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.7);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
-
 .video-card:hover .play-overlay {
   opacity: 1;
 }
 
 /* ==========================================================
-   PAGE BACKGROUND WITH DECORATIVE ELEMENTS
+   BACKGROUND PATTERN (Dot Grid)
    ========================================================== */
 .page-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
-  overflow: hidden;
-  background: var(--bg-primary);
-}
-
-/* Glowing gradient orbs in the background */
-.bg-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(var(--text-primary) 2px, transparent 2px);
+  background-size: 30px 30px;
   opacity: 0.15;
-}
-
-.bg-orb-1 {
-  width: 400px;
-  height: 400px;
-  background: var(--accent-purple);
-  top: -100px;
-  right: -100px;
-}
-
-.bg-orb-2 {
-  width: 300px;
-  height: 300px;
-  background: var(--accent-blue);
-  bottom: -50px;
-  left: -50px;
-}
-
-.bg-orb-3 {
-  width: 250px;
-  height: 250px;
-  background: var(--accent-pink);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
