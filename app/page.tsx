@@ -17,6 +17,7 @@
 import { connectToDatabase } from "@/lib/db";
 import Video from "@/models/Video";
 import VideoFeed from "./components/VideoFeed";
+import HeroSection from "./components/HeroSection";
 
 // Force this page to render on EVERY request (not cached at build time)
 // "force-dynamic" = SSR (Server-Side Rendering) on each request
@@ -38,14 +39,13 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Page heading */}
-      <div className="mb-8 animate-fade-in">
-        <h1 className="text-3xl font-bold gradient-text mb-2">
-          Discover Videos
-        </h1>
-        <p className="text-[var(--text-muted)]">
-          Watch, share, and upload amazing short videos
-        </p>
+      <HeroSection />
+
+      {/* Feed Section Title */}
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+          Trending Reels
+        </h2>
       </div>
 
       {/* Video grid or empty state */}

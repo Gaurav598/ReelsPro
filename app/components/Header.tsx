@@ -1,180 +1,131 @@
 "use client";
 
-/**
- * Header.tsx — App ka Navigation Bar
- *
- * Yeh component har page ke top pe dikhta hai (kyunki layout.tsx mein hai).
- * Features:
- * - Brand logo with gradient text
- * - Upload button (sirf logged-in users ke liye)
- * - User dropdown menu (profile, logout)
- * - Login button (jab user logged in nahi hai)
- *
- * DaisyUI classes used: navbar, btn, btn-ghost, dropdown, dropdown-content, etc.
- */
-
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { Home, User, Upload, LogOut, LogIn } from "lucide-react";
+import { PlaySquare, User, LogOut, Upload, Search, Bell, LogIn } from "lucide-react";
 import { useNotification } from "./Notification";
 
 export default function Header() {
-  // useSession() — NextAuth ka hook, batata hai ki user logged in hai ya nahi
   const { data: session } = useSession();
   const { showNotification } = useNotification();
 
   const handleSignOut = async () => {
     try {
-      await signOut({ callbackUrl: "/" });
+      await signOut();
       showNotification("Signed out successfully", "success");
-    } catch {
+    } catch (error) {
       showNotification("Failed to sign out", "error");
     }
   };
 
   return (
-    <nav className="sticky top-0 z-40 border-b border-white/5"
-         style={{ background: "rgba(10, 10, 26, 0.8)", backdropFilter: "blur(12px)" }}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <header className="sticky top-0 z-50 glass-panel border-x-0 border-t-0 border-b border-[var(--glass-border)]">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          
+          {/* Mobile Logo (Sidebar handles desktop logo) */}
+          <div className="md:hidden flex items-center">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-gradient-premium flex items-center justify-center">
+                <PlaySquare className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-xl font-bold text-gradient">ReelsPro</span>
+            </Link>
+          </div>
 
-          {/* Left side — Brand Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-xl font-bold hover:opacity-80 transition-opacity"
-          >
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                 style={{ background: "var(--gradient-primary)" }}>
-              <Home className="w-4 h-4 text-[var(--text-primary)]" />
+          {/* Search Bar - Center */}
+          <div className="hidden md:flex flex-1 max-w-xl mx-8 relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)] group-focus-within:text-[var(--accent-primary)] transition-colors" />
+            <input 
+              type="text" 
+              placeholder="Search for videos, creators, or hashtags..."
+              className="premium-input pl-11 py-2.5 rounded-full text-sm bg-black/20"
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-1">
+              <kbd className="hidden lg:inline-flex items-center justify-center rounded border border-[var(--glass-border)] bg-black/40 px-1.5 font-mono text-[10px] font-medium text-[var(--text-muted)] opacity-100">
+                <span className="text-xs">⌘</span>K
+              </kbd>
             </div>
-            <span className="gradient-text">ReelsPro</span>
-          </Link>
+          </div>
 
-          {/* Right side — Actions */}
-          <div className="flex items-center gap-3">
+          {/* Right Navigation */}
+          <div className="flex items-center gap-3 md:gap-5">
             {session ? (
               <>
-                {/* Upload Button — sirf logged-in users */}
+                <button className="p-2 rounded-full hover:bg-white/10 transition-colors relative hidden sm:block">
+                  <Bell className="w-5 h-5 text-[var(--text-primary)]" />
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-black"></span>
+                </button>
+
                 <Link
                   href="/upload"
-                  className="gradient-btn !py-2 !px-4 !text-sm"
+                  className="hidden md:flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-premium hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all transform hover:-translate-y-0.5"
                 >
                   <Upload className="w-4 h-4" />
-                  <span className="hidden sm:inline">Upload</span>
+                  <span>Upload</span>
                 </Link>
 
-                {/* User Dropdown */}
                 <div className="dropdown dropdown-end">
                   <div
                     tabIndex={0}
                     role="button"
-                    className="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer
-                               border border-white/10 hover:border-purple-500/30 transition-colors"
-                    style={{ background: "rgba(124, 58, 237, 0.15)" }}
+                    className="btn btn-ghost btn-circle avatar border border-[var(--glass-border)] hover:border-[var(--accent-primary)] transition-all overflow-hidden"
                   >
-                    <User className="w-4 h-4 text-purple-300" />
+                    <div className="w-10 rounded-full bg-black/40">
+                      <img
+                        alt="User profile"
+                        src={session.user?.image || "https://i.pravatar.cc/150?u=a042581f4e29026024d"}
+                      />
+                    </div>
                   </div>
-
-                  {/* Dropdown Menu */}
+                  
+                  {/* Premium Dropdown Menu */}
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[50] mt-3 p-2 w-56 rounded-xl shadow-2xl"
-                    style={{
-                      background: "rgba(20, 20, 50, 0.95)",
-                      backdropFilter: "blur(20px)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                    }}
+                    className="menu menu-sm dropdown-content mt-3 z-[1] p-2 glass-panel rounded-xl w-56 shadow-2xl"
                   >
-                    {/* User email */}
-                    <li className="px-3 py-2">
-                      <span className="text-xs text-[var(--text-primary)]/40">Signed in as</span>
-                      <p className="text-sm text-[var(--text-primary)]/80 truncate">
+                    <li className="px-3 py-2 border-b border-[var(--glass-border)] mb-1">
+                      <span className="text-xs text-[var(--text-muted)]">Signed in as</span>
+                      <p className="text-sm font-medium truncate text-white">
                         {session.user?.email}
                       </p>
                     </li>
-
-                    <div className="border-t border-white/5 my-1"></div>
-
-                    {/* Upload link */}
                     <li>
-                      <Link
-                        href="/upload"
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-[var(--text-primary)]/70
-                                   hover:bg-[var(--accent-purple)] hover:text-black transition-colors w-full border-2 border-transparent hover:border-black"
-                      >
-                        <Upload className="w-4 h-4" />
-                        Upload Video
+                      <Link href="/profile" className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
+                        <User className="w-4 h-4" />
+                        <span className="font-medium">Profile</span>
                       </Link>
                     </li>
-
-                    {/* Sign out */}
+                    <li className="md:hidden">
+                      <Link href="/upload" className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 rounded-lg transition-colors">
+                        <Upload className="w-4 h-4" />
+                        <span className="font-medium">Upload</span>
+                      </Link>
+                    </li>
                     <li>
                       <button
                         onClick={handleSignOut}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-red-400/80
-                                   hover:bg-red-500/10 hover:text-red-400 transition-colors w-full text-left"
+                        className="flex items-center gap-3 px-4 py-3 text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-lg transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
-                        Sign Out
+                        <span className="font-medium">Sign Out</span>
                       </button>
                     </li>
                   </ul>
                 </div>
               </>
             ) : (
-              /* Not logged in — Show Login button */
               <Link
                 href="/login"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
-                           border-2 border-[var(--glass-border)] hover:bg-[var(--accent-purple)] hover:text-black
-                           text-[var(--text-primary)]/70 transition-all font-bold"
+                className="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold text-white bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md transition-all"
               >
                 <LogIn className="w-4 h-4" />
                 Sign In
               </Link>
             )}
-            
-            {/* Theme Toggle Button (Moon/Sun) */}
-            <ThemeToggle />
           </div>
         </div>
       </div>
-    </nav>
-  );
-}
-
-// Simple Theme Toggle Component
-import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
-
-function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Next-themes hydration fix
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <div className="w-9 h-9 rounded-full border border-base-content/10"></div>;
-  }
-
-  const isDark = theme === "dark";
-
-  return (
-    <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-colors
-                 border border-base-content/10 hover:border-purple-500/30 hover:bg-base-content/5"
-      title={`Switch to ${isDark ? "Light" : "Dark"} Mode`}
-    >
-      {isDark ? (
-        <Sun className="w-4 h-4 text-yellow-400" />
-      ) : (
-        <Moon className="w-4 h-4 text-purple-600" />
-      )}
-    </button>
+    </header>
   );
 }
