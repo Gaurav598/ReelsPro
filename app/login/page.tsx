@@ -71,7 +71,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold gradient-text mb-2">Welcome Back</h1>
-          <p className="text-white/40 text-sm">Sign in to your account to continue</p>
+          <p className="text-[var(--text-muted)] text-sm">Sign in to your account to continue</p>
         </div>
 
         {/* ========== SOCIAL LOGIN BUTTONS ========== */}
@@ -81,8 +81,8 @@ export default function LoginPage() {
             onClick={() => handleSocialLogin("google")}
             disabled={socialLoading !== null}
             className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl
-                       bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
-                       transition-all duration-300 text-white/80 font-medium text-sm
+                       border-2 border-[var(--glass-border)] hover:bg-[var(--accent-purple)] hover:text-black
+                       transition-all duration-150 text-[var(--text-primary)] opacity-80 font-bold text-sm
                        disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {socialLoading === "google" ? (
@@ -103,8 +103,8 @@ export default function LoginPage() {
             onClick={() => handleSocialLogin("github")}
             disabled={socialLoading !== null}
             className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl
-                       bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20
-                       transition-all duration-300 text-white/80 font-medium text-sm
+                       border-2 border-[var(--glass-border)] hover:bg-[var(--accent-purple)] hover:text-black
+                       transition-all duration-150 text-[var(--text-primary)] opacity-80 font-bold text-sm
                        disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {socialLoading === "github" ? (
@@ -121,14 +121,14 @@ export default function LoginPage() {
         {/* ========== DIVIDER ========== */}
         <div className="flex items-center gap-3 mb-6">
           <div className="flex-1 h-px bg-white/10"></div>
-          <span className="text-xs text-white/30 uppercase tracking-wider">or continue with email</span>
+          <span className="text-xs text-[var(--text-primary)] opacity-30 uppercase tracking-wider">or continue with email</span>
           <div className="flex-1 h-px bg-white/10"></div>
         </div>
 
         {/* ========== CREDENTIALS FORM ========== */}
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)] opacity-60 mb-2">
               <Mail className="w-4 h-4" />
               Email Address
             </label>
@@ -144,7 +144,7 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-primary)] opacity-60 mb-2">
               <Lock className="w-4 h-4" />
               Password
             </label>
@@ -161,7 +161,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-primary)] opacity-30 hover:text-[var(--text-primary)] opacity-60 transition-colors"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -191,7 +191,7 @@ export default function LoginPage() {
 
         {/* Register Link */}
         <div className="mt-6 text-center">
-          <p className="text-sm text-white/40">
+          <p className="text-sm text-[var(--text-muted)]">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"

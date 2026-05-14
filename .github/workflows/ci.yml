@@ -1,0 +1,36 @@
+name: ReelsPro CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm ci
+
+
+    - name: Test Build (Next.js)
+      run: npm run build
+      env:
+        # We need mock environment variables for the build to succeed if it strict-checks them
+        MONGODB_URI: "mongodb://localhost:27017/test"
+        NEXTAUTH_SECRET: "test-secret"
+        NEXTAUTH_URL: "http://localhost:3000"
+        NEXT_PUBLIC_PUBLIC_KEY: "test-key"
+        NEXT_PUBLIC_URL_ENDPOINT: "https://ik.imagekit.io/test"
+        IMAGEKIT_PRIVATE_KEY: "test-private"

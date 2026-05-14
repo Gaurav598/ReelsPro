@@ -1,24 +1,13 @@
 "use client";
 
-/**
- * VideoComponent.tsx — Ek single video ka card
- *
- * Har video ek card mein dikhta hai jisme:
- * - Video player (ImageKit se stream hota hai)
- * - Title
- * - Description
- * - Upload date
- *
- * "use client" kyunki video player browser mein render hota hai (server pe nahi)
- */
-
 import { IVideo } from "@/models/Video";
-import { Calendar, Trash2 } from "lucide-react";
+import { Calendar, Trash2, Play } from "lucide-react";
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useNotification } from "./Notification";
 import { apiClient } from "@/lib/api-client";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function VideoComponent({ video }: { video: IVideo }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -44,17 +33,14 @@ export default function VideoComponent({ video }: { video: IVideo }) {
     }
   };
 
-  // Format date — "2 Apr 2026" style
   const formatDate = (date?: Date | string) => {
     if (!date) return "";
-    return new Date(date).toLocaleDateString("en-IN", {
-      day: "numeric",
+    return new Date(date).toLocaleDateString("en-US", {
       month: "short",
-      year: "numeric",
+      day: "numeric"
     });
   };
 
-  // Build ImageKit URL from video path
   const videoSrc = video.videoUrl.startsWith("http")
     ? video.videoUrl
     : `${process.env.NEXT_PUBLIC_URL_ENDPOINT}${video.videoUrl}`;
@@ -65,31 +51,51 @@ export default function VideoComponent({ video }: { video: IVideo }) {
       : `${process.env.NEXT_PUBLIC_URL_ENDPOINT}${video.thumbnailUrl}`)
     : undefined;
 
+  // Handle hover to play preview
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   return (
-    <div className="video-card animate-fade-in">
+    <div className="cinematic-card group cursor-pointer" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {/* Video Container */}
-      <div
-        className="relative group"
-        style={{ aspectRatio: "9/16" }}
-      >
+      <div className="relative overflow-hidden bg-black" style={{ aspectRatio: "9/16" }}>
         <video
           ref={videoRef}
           src={videoSrc}
           poster={thumbnailSrc}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           loop
-          controls // Added native html5 controls per request (speed, mute/unmute, fullscreen)
+          muted
           playsInline
           preload="metadata"
         />
 
-        {/* Delete Button (Only visible if owner) */}
+        {/* Play Icon Overlay (Fades out on hover) */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:opacity-0 transition-opacity duration-300">
+          <div className="w-12 h-12 rounded-full glass-panel flex items-center justify-center">
+            <Play className="w-5 h-5 text-white ml-1" />
+          </div>
+        </div>
+
+        {/* Action Buttons */}
         {session?.user?.id === video.userId?.toString() && (
           <button
-            onClick={handleDelete}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete();
+            }}
             disabled={isDeleting}
-            className="absolute top-3 right-3 p-2 rounded-full bg-black/60 shadow-lg border border-white/10
-                       text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all z-10"
+            className="absolute top-3 right-3 p-2.5 rounded-full glass-panel hover:bg-red-500/80 text-red-100 transition-all z-20 opacity-0 group-hover:opacity-100"
             title="Delete Video"
           >
             <Trash2 className="w-4 h-4" />
@@ -97,24 +103,29 @@ export default function VideoComponent({ video }: { video: IVideo }) {
         )}
 
         {/* Gradient overlay at bottom for text readability */}
-        <div className="absolute bottom-0 left-0 right-0 h-24
-                        bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
+        
+        {/* Absolute Bottom Info */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+          <h3 className="font-bold text-white text-base leading-tight mb-1 drop-shadow-md">
+            {video.title}
+          </h3>
+          {video.description && (
+            <p className="text-xs text-white/80 line-clamp-1 drop-shadow-sm">
+              {video.description}
+            </p>
+          )}
+        </div>
       </div>
 
-      {/* Video Info */}
-      <div className="p-4">
-        <h3 className="font-semibold text-[var(--text-primary)] text-sm line-clamp-1 mb-1">
-          {video.title}
-        </h3>
-        
-        {video.description && (
-          <p className="text-xs text-[var(--text-muted)] line-clamp-2 mb-2">
-            {video.description}
-          </p>
-        )}
-
+      {/* Meta Bar below video */}
+      <div className="px-4 py-3 bg-[var(--bg-secondary)] flex items-center justify-between border-t border-[var(--glass-border)]">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-gradient-premium border border-[var(--glass-border)]" />
+          <span className="text-xs font-medium text-[var(--text-primary)]">Creator</span>
+        </div>
         {video.createdAt && (
-          <div className="flex items-center gap-1 text-xs text-[var(--text-muted)] mt-2">
+          <div className="flex items-center gap-1.5 text-[11px] text-[var(--text-muted)]">
             <Calendar className="w-3 h-3" />
             <span>{formatDate(video.createdAt)}</span>
           </div>

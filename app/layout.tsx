@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./components/Providers";
 import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 
 /**
  * Font Loading — Next.js automatically downloads and hosts these fonts
@@ -50,16 +51,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        {/* Background decorative orbs — positioned behind everything with z-index */}
-        <div className="page-bg">
-          <div className="bg-orb bg-orb-1"></div>
-          <div className="bg-orb bg-orb-2"></div>
-          <div className="bg-orb bg-orb-3"></div>
-        </div>
-
         <Providers>
-          <Header />
-          <main className="min-h-screen">{children}</main>
+          <div className="flex min-h-screen">
+            <Sidebar />
+            <div className="flex-1 flex flex-col min-w-0">
+              <Header />
+              <main className="flex-1">{children}</main>
+            </div>
+          </div>
         </Providers>
       </body>
     </html>

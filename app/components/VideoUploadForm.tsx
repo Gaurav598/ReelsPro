@@ -85,7 +85,7 @@ export default function VideoUploadForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Title Input */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] mb-2">
           <Type className="w-4 h-4" />
           Title
         </label>
@@ -102,7 +102,7 @@ export default function VideoUploadForm() {
 
       {/* Description Textarea */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] mb-2">
           <AlignLeft className="w-4 h-4" />
           Description
         </label>
@@ -114,14 +114,14 @@ export default function VideoUploadForm() {
           maxLength={500}
           rows={3}
         />
-        <p className="text-xs text-white/25 mt-1 text-right">
+        <p className="text-xs text-[var(--text-primary)] opacity-25 mt-1 text-right">
           {description.length}/500
         </p>
       </div>
 
       {/* Video Upload */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] mb-2">
           <Film className="w-4 h-4" />
           Video File
         </label>
@@ -138,7 +138,7 @@ export default function VideoUploadForm() {
 
       {/* Thumbnail Upload */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-white/60 mb-2">
+        <label className="flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] mb-2">
           <ImageIcon className="w-4 h-4" />
           Thumbnail Image
         </label>
@@ -173,7 +173,7 @@ export default function VideoUploadForm() {
       </button>
 
       {/* Help text */}
-      <p className="text-xs text-white/25 text-center">
+      <p className="text-xs text-[var(--text-primary)] opacity-25 text-center">
         Your video will be visible to everyone on the home page
       </p>
     </form>
